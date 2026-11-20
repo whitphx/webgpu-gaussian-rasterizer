@@ -50,7 +50,19 @@ Open the printed URL in a browser with WebGPU. The page animates 40,000 Gaussian
 pnpm test
 ```
 
-The GPU tests run under Node through Dawn (the `webgpu` package) and compare every configuration against a per-pixel CPU rasterizer in `test/reference.ts`. Dawn needs a Vulkan driver on Linux. Without a usable adapter those tests are skipped and only the CPU tests run.
+The GPU tests run under Node through Dawn (the `webgpu` package) and compare every configuration against a per-pixel CPU rasterizer in `test/reference.ts`. Dawn needs a Vulkan driver on Linux. Without a usable adapter those tests are skipped and only the CPU tests run, unless `REQUIRE_WEBGPU=1` is set, which turns a missing adapter into a failure. CI runs them on lavapipe, Mesa's CPU Vulkan driver (`apt install mesa-vulkan-drivers` on Debian and Ubuntu), which works on a machine without a GPU too.
+
+### Parity with the CUDA rasterizer
+
+`scripts/cuda-parity/parity.py` renders a random scene with the reference CUDA rasterizer of 3D Gaussian Splatting ([graphdeco-inria/diff-gaussian-rasterization](https://github.com/graphdeco-inria/diff-gaussian-rasterization), or a fork compiled for more channels, such as [xg-chu/diff-gaussian-rasterization](https://github.com/xg-chu/diff-gaussian-rasterization) with 32) and with this library under Dawn, and prints the PSNR between the two images. It needs numpy, PyTorch on CUDA and the rasterizer. The rasterizer comes under its own non-commercial licence and is not a dependency of this repository, so CI does not run the script.
+
+```bash
+pnpm build
+python scripts/cuda-parity/parity.py   # diff_gaussian_rasterization, 3 channels
+python scripts/cuda-parity/parity.py --module diff_gaussian_rasterization_32d --channels 32
+```
+
+On an NVIDIA P100, the 32-channel fork that GAGAvatar uses and this library agreed to 120 dB PSNR on 20,000 Gaussians at 512 x 384, with a largest difference of 8e-4.
 
 ## Licence
 
