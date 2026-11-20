@@ -1,0 +1,34 @@
+{
+  "name": "webgpu-gaussian-rasterizer",
+  "private": true,
+  "version": "0.0.0",
+  "description": "WebGPU 3D Gaussian tile rasterizer for any number of feature channels, rendering into a GPU buffer",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "files": ["dist", "THIRD_PARTY_NOTICES.md"],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "keywords": ["webgpu", "gaussian-splatting", "3dgs", "wgsl", "rasterizer", "neural-rendering"],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.build.json && vite build",
+    "build:example": "vite build --mode example",
+    "typecheck": "tsc",
+    "test": "vitest run",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@webgpu/types": "0.1.74",
+    "typescript": "7.0.2",
+    "vite": "8.3.6",
+    "vitest": "5.1.0",
+    "webgpu": "0.6.2"
+  }
+}

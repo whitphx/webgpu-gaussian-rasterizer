@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Procedural feature splats</title>
+    <style>
+      :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+      body { margin: 0; padding: 16px; display: grid; gap: 12px; justify-items: start; }
+      canvas { width: min(512px, 100%); aspect-ratio: 1; background: #000; }
+      fieldset { display: flex; gap: 16px; flex-wrap: wrap; border: none; padding: 0; margin: 0; }
+    </style>
+  </head>
+  <body>
+    <h1>Procedural feature splats</h1>
+    <p>
+      Gaussians on a wobbling sphere carry 8 feature channels. The rasterizer composites all 8 into a GPU buffer,
+      and a small compute pass decodes them to colour before the canvas shows the result, with no readback.
+    </p>
+    <canvas id="view" width="512" height="512"></canvas>
+    <fieldset>
+      <legend>Show</legend>
+      <label><input type="radio" name="show" value="decoded" checked /> decoded colour</label>
+      <label><input type="radio" name="show" value="raw" /> raw channels 0 to 2</label>
+    </fieldset>
+    <output id="status" aria-live="polite"></output>
+    <script type="module" src="/examples/procedural/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,3 @@
+# Holds back releases younger than 14 days, transitive ones included
+# (https://pnpm.io/settings#minimumreleaseage, in minutes).
+minimumReleaseAge: 20160
