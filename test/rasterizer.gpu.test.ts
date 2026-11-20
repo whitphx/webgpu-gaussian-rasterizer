@@ -19,8 +19,13 @@ beforeAll(async () => {
   device = await (await gpu.requestAdapter())?.requestDevice();
   device?.addEventListener('uncapturederror', (e) => errors.push((e as GPUUncapturedErrorEvent).error.message));
 });
-// Without a GPU adapter the tests are skipped.
-beforeEach(({ skip }) => { if (!device) skip(); });
+// Without a GPU adapter the tests are skipped, unless REQUIRE_WEBGPU is set
+// so that CI cannot pass by skipping them.
+beforeEach(({ skip }) => {
+  if (device) return;
+  if (import.meta.env.REQUIRE_WEBGPU) throw new Error('REQUIRE_WEBGPU is set, but Dawn found no WebGPU adapter');
+  skip();
+});
 afterEach(() => expect(errors.splice(0)).toEqual([]));
 afterAll(() => device?.destroy());
 

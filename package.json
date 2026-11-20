@@ -5,6 +5,7 @@
   "description": "WebGPU 3D Gaussian tile rasterizer for any number of feature channels, rendering into a GPU buffer",
   "license": "MIT",
   "type": "module",
+  "packageManager": "pnpm@10.34.1",
   "sideEffects": false,
   "files": ["dist", "THIRD_PARTY_NOTICES.md"],
   "main": "./dist/index.js",

@@ -13,5 +13,8 @@ export default defineConfig(({ mode }) => ({
       },
   test: {
     environment: 'node',
+    // A software adapter (lavapipe in CI) with a cold shader cache takes
+    // seconds to compile a test's pipelines.
+    testTimeout: 60_000,
   },
 }));
